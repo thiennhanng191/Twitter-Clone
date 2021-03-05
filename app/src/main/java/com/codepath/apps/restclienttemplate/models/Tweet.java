@@ -14,6 +14,9 @@ public class Tweet {
     public String createdAt;
     public long id;
     public User user;
+    public String favoriteCount;
+    public String retweetCount;
+
 
     public static Tweet fromJson(JSONObject jsonObject) throws JSONException {
         Tweet tweet = new Tweet();
@@ -21,6 +24,8 @@ public class Tweet {
         tweet.createdAt = jsonObject.getString("created_at");
         tweet.id = jsonObject.getLong("id");
         tweet.user = User.fromJson(jsonObject.getJSONObject("user"));
+        tweet.favoriteCount = jsonObject.getString("favorite_count");
+        tweet.retweetCount = jsonObject.getString("retweet_count");
         return tweet;
     }
 
