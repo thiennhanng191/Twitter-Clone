@@ -8,5 +8,6 @@
     <string name="profile_image_description">Profile Image</string>
     <string name="twitter_handle">Twitter Handle</string>
     <string name="tweet_content">Tweet Content</string>
+    <string name="time_stamp">time_stamp</string>
 
 </resources>
