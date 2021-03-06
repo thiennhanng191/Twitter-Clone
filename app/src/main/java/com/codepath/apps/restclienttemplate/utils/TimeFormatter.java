@@ -53,8 +53,8 @@ public class TimeFormatter {
 
     /**
      * Given a date String of the format given by the Twitter API, returns a display-formatted
-     * String of the absolute date of the form "30 Jun 16".
-     * This, as of 2016-06-30, matches the behavior of the official Twitter app.
+     * String of the absolute date of the form "h:m PM . 3/5/21".
+     * This, as of Mar 5, 2021, matches the behavior of the official Twitter app.
      */
     public static String getTimeStamp(String rawJsonDate) {
         String time = "";
@@ -66,7 +66,7 @@ public class TimeFormatter {
             then.setTime(format.parse(rawJsonDate));
             Date date = then.getTime();
 
-            SimpleDateFormat format1 = new SimpleDateFormat("h:mm a \u00b7 dd MMM yy");
+            SimpleDateFormat format1 = new SimpleDateFormat("h:mm a \u00b7 M/d/yy");
 
             time = format1.format(date);
 

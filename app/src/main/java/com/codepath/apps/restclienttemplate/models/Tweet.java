@@ -5,10 +5,12 @@ import com.codepath.apps.restclienttemplate.utils.TimeFormatter;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcel;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Parcel
 public class Tweet {
     public String body;
     public String createdAt;
@@ -17,6 +19,8 @@ public class Tweet {
     public String favoriteCount;
     public String retweetCount;
 
+    // empty constructor needed by the Parceler library
+    public Tweet() {}
 
     public static Tweet fromJson(JSONObject jsonObject) throws JSONException {
         Tweet tweet = new Tweet();
@@ -24,11 +28,16 @@ public class Tweet {
         tweet.createdAt = jsonObject.getString("created_at");
         tweet.id = jsonObject.getLong("id");
         tweet.user = User.fromJson(jsonObject.getJSONObject("user"));
-        tweet.favoriteCount = jsonObject.getString("favorite_count");
-        tweet.retweetCount = jsonObject.getString("retweet_count");
+        tweet.favoriteCount = formatCount(jsonObject.getString("favorite_count"));
+        tweet.retweetCount = formatCount(jsonObject.getString("retweet_count"));
         return tweet;
     }
 
+    private static String formatCount(String count) {
+        int val = Integer.parseInt(count);
+        return val >= 10000 ? ""+ val/1000 + "K" : count;
+
+    }
     public static List<Tweet> fromJsonArray(JSONArray jsonArray) throws JSONException {
         List<Tweet> tweets = new ArrayList<>();
 

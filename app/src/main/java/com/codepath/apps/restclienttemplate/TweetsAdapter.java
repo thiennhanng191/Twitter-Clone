@@ -21,17 +21,20 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
     Context context;
     List<Tweet> tweets;
 
+    private  OnTweetListener mOnTweetListner;
+
     // Pass in context and list of tweets
-    public TweetsAdapter(Context context, List<Tweet> tweets) {
+    public TweetsAdapter(Context context, List<Tweet> tweets, OnTweetListener onTweetListener) {
         this.context = context;
         this.tweets = tweets;
+        this.mOnTweetListner = onTweetListener;
     }
     // For each row, inflate the layout for a tweet
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_tweet, parent, false);
-        return new ViewHolder(view);
+        return new ViewHolder(view, mOnTweetListner);
     }
 
     // Bind values based on the position of the elements
@@ -60,29 +63,50 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
     }
 
     // Define a viewholder
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView ivProfileImage;
         TextView tvTweetContent;
         TextView tvTwitterHandle;
         TextView tvTimestamp;
         TextView tvName;
+        TextView tvFavoriteCount;
+        TextView tvRetweetCount;
 
-        public ViewHolder(@NonNull View itemView) {
+        OnTweetListener onTweetListner;
+
+        public ViewHolder(@NonNull View itemView, OnTweetListener onTweetListner) {
             super(itemView);
             ivProfileImage = itemView.findViewById(R.id.ivProfileImage);
             tvTweetContent = itemView.findViewById(R.id.tvTweetContent);
             tvTwitterHandle = itemView.findViewById(R.id.tvTwitterHandle);
             tvTimestamp = itemView.findViewById(R.id.tvTimestamp);
             tvName = itemView.findViewById(R.id.tvName);
+            tvFavoriteCount = itemView.findViewById(R.id.tvFavoriteCount);
+            tvRetweetCount = itemView.findViewById(R.id.tvRetweetCount);
+
+            this.onTweetListner = onTweetListner;
+            itemView.setOnClickListener(this);
+
         }
 
 
         public void bind(Tweet tweet) {
             tvTweetContent.setText(tweet.body);
             tvName.setText(tweet.user.name);
-            tvTwitterHandle.setText("@"+tweet.user.screenName);
+            tvTwitterHandle.setText(tweet.user.screenName);
             tvTimestamp.setText(tweet.getFormattedTimestamp());
+            tvFavoriteCount.setText(tweet.favoriteCount);
+            tvRetweetCount.setText(tweet.retweetCount);
             Glide.with(context).load(tweet.user.profileImageUrl).transform(new RoundedCornersTransformation(100, 0)).into(ivProfileImage);
         }
+
+        @Override
+        public void onClick(View v) {
+            onTweetListner.onTweetClick(getAdapterPosition());
+        }
+    }
+
+    public interface OnTweetListener {
+        void onTweetClick(int position);
     }
 }

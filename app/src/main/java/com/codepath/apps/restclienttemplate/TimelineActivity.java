@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -15,13 +16,14 @@ import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.Headers;
 
-public class TimelineActivity extends AppCompatActivity {
+public class TimelineActivity extends AppCompatActivity implements TweetsAdapter.OnTweetListener{
     public static final String TAG = "TimelineActivity";
 
     TwitterClient client;
@@ -59,7 +61,7 @@ public class TimelineActivity extends AppCompatActivity {
 
         // initialize the list of tweets and adapter
         tweets = new ArrayList<>();
-        adapter = new TweetsAdapter(this, tweets);
+        adapter = new TweetsAdapter(this, tweets, this);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
 
@@ -147,5 +149,13 @@ public class TimelineActivity extends AppCompatActivity {
                 Log.e(TAG, "onFailure" + response, throwable);
             }
         });
+    }
+
+    @Override
+    public void onTweetClick(int position) {
+        Tweet tweet = tweets.get(position);
+        Intent intent = new Intent(TimelineActivity.this, TweetDetails.class);
+        intent.putExtra("tweet", Parcels.wrap(tweet));
+        startActivity(intent);
     }
 }
