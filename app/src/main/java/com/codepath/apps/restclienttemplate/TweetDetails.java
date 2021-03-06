@@ -3,8 +3,10 @@ package com.codepath.apps.restclienttemplate;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
+import androidx.appcompat.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
 import com.codepath.apps.restclienttemplate.models.Tweet;
@@ -46,6 +48,23 @@ public class TweetDetails extends AppCompatActivity {
         tvRetweetCount.setText(tweet.retweetCount);
         Glide.with(this).load(tweet.user.profileImageUrl).transform(new RoundedCornersTransformation(100, 0)).into(ivProfileImage);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarTweet);
+        setSupportActionBar(toolbar);
 
+        // add back arrow to toolbar
+        if (getSupportActionBar() != null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // handle arrow click here
+        if (item.getItemId() == android.R.id.home) {
+            finish(); // close this activity and return to preview activity (if there is any)
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

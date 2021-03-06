@@ -94,7 +94,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             tvTweetContent.setText(tweet.body);
             tvName.setText(tweet.user.name);
             tvTwitterHandle.setText(tweet.user.screenName);
-            tvTimestamp.setText(tweet.getFormattedTimestamp());
+            tvTimestamp.setText("\u2022 " + tweet.getFormattedTimestamp());
             tvFavoriteCount.setText(tweet.favoriteCount);
             tvRetweetCount.setText(tweet.retweetCount);
             Glide.with(context).load(tweet.user.profileImageUrl).transform(new RoundedCornersTransformation(100, 0)).into(ivProfileImage);
