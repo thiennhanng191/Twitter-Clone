@@ -64,12 +64,35 @@
         app:layout_constraintTop_toBottomOf="@+id/tvTwitterHandle" />
 
     <ImageView
+        android:id="@+id/ivRetweetIcon"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:src="@mipmap/retweet_icon_foreground"
+        app:layout_constraintStart_toEndOf="@id/ivProfileImage"
+        android:layout_marginStart="3dp"
+        app:layout_constraintTop_toBottomOf="@+id/tvTweetContent"
+        app:tint="#cfcfcf" />
+
+    <TextView
+        android:id="@+id/tvRetweetCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4.5dp"
+        android:textSize="12sp"
+        android:text="@string/favorite_count"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/ivRetweetIcon"
+        app:layout_constraintTop_toBottomOf="@+id/tvTweetContent" />
+
+
+    <ImageView
         android:id="@+id/ivFavoriteIcon"
         android:layout_width="25dp"
         android:layout_height="25dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="20dp"
         android:src="@mipmap/favorite_icon_foreground"
-        app:layout_constraintStart_toEndOf="@id/ivProfileImage"
+        app:layout_constraintStart_toEndOf="@id/tvRetweetCount"
         app:layout_constraintTop_toBottomOf="@+id/tvTweetContent"
         app:tint="#FFF" />
 
@@ -79,34 +102,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4.5dp"
-        android:textSize="11sp"
+        android:textSize="12sp"
         android:text="@string/favorite_count"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/ivFavoriteIcon"
         app:layout_constraintTop_toBottomOf="@+id/tvTweetContent" />
-
-    <ImageView
-        android:id="@+id/ivRetweetIcon"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_marginStart="20dp"
-        android:src="@mipmap/retweet_icon_foreground"
-        app:layout_constraintStart_toEndOf="@id/tvFavoriteCount"
-        app:layout_constraintTop_toBottomOf="@+id/tvTweetContent"
-        app:tint="#cfcfcf" />
-
-    <TextView
-        android:id="@+id/tvRetweetCount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4.5dp"
-        android:textSize="11sp"
-        android:text="@string/favorite_count"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/ivRetweetIcon"
-        app:layout_constraintTop_toBottomOf="@+id/tvTweetContent" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
