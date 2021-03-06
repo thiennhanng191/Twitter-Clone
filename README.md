@@ -41,7 +41,7 @@ GIF created with [GIPHY Capture](https://apps.apple.com/us/app/giphy-capture-the
 
 ## License
 
-    Copyright [yyyy] [name of copyright owner]
+    Copyright [2021] [MIT]
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
