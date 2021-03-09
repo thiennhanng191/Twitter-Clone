@@ -6,7 +6,7 @@
             res/values-vXX/styles.xml, while customizations related to
             backward-compatibility can go here.
         -->
-        <item name="android:colorPrimary">#00FF00</item>
+        <item name="android:colorPrimary">#1DA1F2</item>
         <item name="android:background">#14171A</item>
         <item name="toolbarNavigationButtonStyle">@style/Toolbar.Button.Navigation.Tinted</item>
 

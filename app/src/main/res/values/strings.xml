@@ -15,5 +15,7 @@
     <string name="tweetTitle">Tweet</string>
     <string name="retweets">Retweets</string>
     <string name="likes">Likes</string>
-
+    <string name="compose_hint">What\'s happening?</string>
+    <string name="cancel_button">Cancel</string>
+    <string name="compose_tweet">Tweet</string>
 </resources>
