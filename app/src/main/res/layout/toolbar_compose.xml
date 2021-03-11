@@ -31,7 +31,7 @@
             android:textAllCaps="false"/>
 
         <Button
-            android:id="@+id/tweetButton"
+            android:id="@+id/btnTweet"
             android:layout_width="70dp"
             android:layout_height="35dp"
             android:text="@string/compose_tweet"
@@ -39,8 +39,8 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_margin="15dp"
-            android:textColor="@color/white"
-            android:background="@drawable/button_background"
+            android:textColor="@color/button_text_color_selector"
+            android:background="@drawable/button_background_selector"
             android:textAllCaps="false"
             android:radius="20dp"/>
 
