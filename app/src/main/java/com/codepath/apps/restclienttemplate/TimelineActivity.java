@@ -1,5 +1,6 @@
 package com.codepath.apps.restclienttemplate;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -27,7 +28,7 @@ import okhttp3.Headers;
 
 public class TimelineActivity extends AppCompatActivity implements TweetsAdapter.OnTweetListener{
     public static final String TAG = "TimelineActivity";
-
+    private final int REQUEST_CODE = 20;
     TwitterClient client;
     RecyclerView rvTweets;
     List<Tweet> tweets;
@@ -64,7 +65,7 @@ public class TimelineActivity extends AppCompatActivity implements TweetsAdapter
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(TimelineActivity.this, ComposeActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, REQUEST_CODE);
             }
         });
 
@@ -101,6 +102,22 @@ public class TimelineActivity extends AppCompatActivity implements TweetsAdapter
         // set up RecyclerView (layout manager and adapter)
         populateHomeTimeLine();
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
+            // Get data from the intent (tweet)
+            Tweet tweet = Parcels.unwrap(data.getParcelableExtra("tweet"));
+
+            // Update the RV with the tweet
+            // Modify data source of the tweets
+            tweets.add(0, tweet);
+            // Update the adapter
+            adapter.notifyItemInserted(0);
+            rvTweets.smoothScrollToPosition(0);
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     private void loadNextDataFromApi(int offset) {

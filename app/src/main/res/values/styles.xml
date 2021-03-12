@@ -8,6 +8,7 @@
         -->
         <item name="android:colorPrimary">#1DA1F2</item>
         <item name="toolbarNavigationButtonStyle">@style/Toolbar.Button.Navigation.Tinted</item>
+        <item name="android:background">#14171A</item>
         <item name="colorPrimary">#1DA1F2</item>
     </style>
 
@@ -25,7 +26,6 @@
     <!-- Application theme. -->
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
-        <item name="android:background">#14171A</item>
     </style>
 
     <style name="counterText">
