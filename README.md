@@ -8,29 +8,32 @@ Time spent: **11** hours spent in total
 
 The following **required** functionality is completed:
 
-- [x] User can **sign in to Twitter** using OAuth login
-- [x]	User can **view tweets from their home timeline**
-  - [x] User is displayed the username, name, and body for each tweet
-  - [x] User is displayed the [relative timestamp](https://gist.github.com/nesquena/f786232f5ef72f6e10a7) for each tweet "8m", "7h"
-- [x] User can refresh tweets timeline by pulling down to refresh
+- [x] User can **compose and post a new tweet**
+  - [x] User can click a “Compose” icon in the Action Bar on the top right
+  - [x] User can then enter a new tweet and post this to twitter
+  - [x] User is taken back to home timeline with **new tweet visible** in timeline
+  - [x] Newly created tweet should be manually inserted into the timeline and not rely on a full refresh
+  - [x] User can **see a counter with total number of characters left for tweet** on compose tweet page
 
 The following **optional** features are implemented:
 
-- [x] User can view more tweets as they scroll with infinite pagination
-- [x] Improve the user interface and theme the app to feel "twitter branded"
-- [x] Links in tweets are clickable and will launch the web browser
-- [x] User can tap a tweet to display a "detailed" view of that tweet
-- [x] On the Twitter timeline, leverage the CoordinatorLayout to apply scrolling behavior that hides / shows the toolbar.
-
+- [x] User is using **"Twitter branded" colors and styles**
+- [x] User can click links in tweets launch the web browser 
+- [x] The "Compose" action is moved to a FloatingActionButton instead of on the AppBar
+- [x] Use Parcelable instead of Serializable using the popular [Parceler library](http://guides.codepath.org/android/Using-Parceler).
+- [x] User can **open the twitter app offline and see last loaded tweets**. Persisted in SQLite tweets are refreshed on every application launch. While "live data" is displayed when app can get it from Twitter API, it is also saved for use in offline mode.
 The following **additional** features are implemented:
-- [x] Integrated ConstraintLayout
-- [x] Implment custom Toolbar
+- [x] Display Twitter profile image in compose activity
+- [x] Disable compose button when edit text is empty and when user put more characters than allowed.
 
 ## Video Walkthrough
 
-Here's a walkthrough of implemented user stories:
+- Here's a walkthrough of implemented user stories related to composing new tweet:
+<img src='walkthrough-compose-tweet.gif' title='Video Walkthrough Compose Tweet' width='' alt='Video Walkthrough Compose Tweet' />
 
-<img src='application-walkthrough-assignment3.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+- Here's a walkthrough of implemented user stories related to persistence:
+<img src='walkthrough-persistence.gif' title='Video Walkthrough Persistence' width='' alt='Video Walkthrough Persistence' />
+
 
 GIF created with [GIPHY Capture](https://apps.apple.com/us/app/giphy-capture-the-gif-maker/id668208984?mt=12).
 
