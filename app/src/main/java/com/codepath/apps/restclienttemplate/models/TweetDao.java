@@ -11,7 +11,7 @@ import java.util.List;
 public interface TweetDao {
     // make a query on the Tweet and User table, select fields with specific columns name
     @Query("SELECT Tweet.body AS tweet_body, Tweet.createdAt As tweet_createdAt, Tweet.favoriteCount AS tweet_favoriteCount, Tweet.retweetCount AS tweet_retweetCount, Tweet.id AS tweet_id, User.* " +
-            "FROM Tweet INNER JOIN User ON Tweet.userId = User.id ORDER BY createdAt DESC LIMIT 5")
+            "FROM Tweet INNER JOIN User ON Tweet.userId = User.id ORDER BY createdAt DESC LIMIT 50")
     List<TweetWithUser> recentItems();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

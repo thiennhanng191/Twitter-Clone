@@ -23,7 +23,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginTop="5dp"
         app:counterEnabled="true"
-        app:counterMaxLength="250"
+        app:counterMaxLength="280"
         app:counterOverflowTextAppearance="@style/counterOverride"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/ivUserProfileImage"

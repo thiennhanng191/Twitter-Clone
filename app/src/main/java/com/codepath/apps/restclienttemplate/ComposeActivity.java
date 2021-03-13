@@ -31,7 +31,7 @@ import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 import okhttp3.Headers;
 
 public class ComposeActivity extends AppCompatActivity {
-    public static final int MAX_TWEET_LENGTH = 250;
+    public static final int MAX_TWEET_LENGTH = 280;
     public static final String TAG = "ComposeActivity";
 
     ImageView ivUserProfileImage;
@@ -74,6 +74,9 @@ public class ComposeActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 btnTweet.setEnabled(!etComposeTweet.getText().toString().isEmpty());
+                if (etComposeTweet.getText().toString().length() > MAX_TWEET_LENGTH) {
+                    btnTweet.setEnabled(false);
+                }
             }
 
             @Override
