@@ -8,11 +8,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
 import com.codepath.apps.restclienttemplate.models.Tweet;
+import com.codepath.apps.restclienttemplate.models.TweetDao;
+import com.codepath.apps.restclienttemplate.models.TweetWithUser;
+import com.codepath.apps.restclienttemplate.models.User;
 import com.codepath.apps.restclienttemplate.utils.EndlessRecyclerViewScrollListener;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -29,6 +33,8 @@ import okhttp3.Headers;
 public class TimelineActivity extends AppCompatActivity implements TweetsAdapter.OnTweetListener{
     public static final String TAG = "TimelineActivity";
     private final int REQUEST_CODE = 20;
+
+    TweetDao tweetDao;
     TwitterClient client;
     RecyclerView rvTweets;
     List<Tweet> tweets;
@@ -43,6 +49,8 @@ public class TimelineActivity extends AppCompatActivity implements TweetsAdapter
         setContentView(R.layout.activity_timeline);
 
         client = TwitterApplication.getRestClient(this);
+
+        tweetDao = ((TwitterApplication) getApplicationContext()).getMyDatabase().tweetlDao();
 
         swipeContainer = findViewById(R.id.swipeContainer);
 
@@ -78,6 +86,7 @@ public class TimelineActivity extends AppCompatActivity implements TweetsAdapter
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
 
+        // set up RecyclerView (layout manager and adapter)
         rvTweets.setLayoutManager(linearLayoutManager);
         rvTweets.setAdapter(adapter);
 
@@ -99,7 +108,18 @@ public class TimelineActivity extends AppCompatActivity implements TweetsAdapter
                 DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         rvTweets.addItemDecoration(itemDecoration);
 
-        // set up RecyclerView (layout manager and adapter)
+        // Query for existing tweets in the DB
+        AsyncTask.execute(new Runnable() { // AsyncTask here for it not to be executed in the Main UI thread -> will crash the app
+            @Override
+            public void run() {
+                Log.i(TAG, "showing data from database");
+                List<TweetWithUser> tweetWithUser = tweetDao.recentItems();
+                List<Tweet> tweetsFromDB = TweetWithUser.getTweetList(tweetWithUser);
+                adapter.clear();
+                adapter.addAll(tweetsFromDB);
+            }
+        });
+
         populateHomeTimeLine();
 
     }
@@ -156,8 +176,9 @@ public class TimelineActivity extends AppCompatActivity implements TweetsAdapter
 
                 JSONArray jsonArray = json.jsonArray;
                 try {
+                    final List<Tweet> tweetsFromAPICall = Tweet.fromJsonArray(jsonArray);
                     adapter.clear();
-                    adapter.addAll(Tweet.fromJsonArray(jsonArray));
+                    adapter.addAll(tweetsFromAPICall);
 
                     // call setRefreshing(false to signal refresh has finished
                     swipeContainer.setRefreshing(false);
@@ -166,6 +187,22 @@ public class TimelineActivity extends AppCompatActivity implements TweetsAdapter
                     tweets.addAll(Tweet.fromJsonArray(jsonArray));
                     adapter.notifyDataSetChanged();
                     */
+
+                    // insert tweets to SQLite database
+                    AsyncTask.execute(new Runnable() { // AsyncTask here for it not to be executed in the Main UI thread -> will crash the app
+                        @Override
+                        public void run() {
+                            Log.i(TAG, "saving data to database");
+
+                            // insert users first in order for the foreign key connnection to work
+                            List<User> usersFromAPICall = User.fromJsonTweetArray(tweetsFromAPICall);
+                            tweetDao.insertModel(usersFromAPICall.toArray(new User[0]));
+
+                            // then insert tweet
+                            tweetDao.insertModel(tweetsFromAPICall.toArray(new Tweet[0]));
+
+                        }
+                    });
                 } catch (JSONException e) {
                     Log.e(TAG, "Json exception", e);
                     e.printStackTrace();

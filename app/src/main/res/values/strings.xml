@@ -18,4 +18,7 @@
     <string name="compose_hint">What\'s happening?</string>
     <string name="cancel_button">Cancel</string>
     <string name="compose_tweet">Tweet</string>
+    <string name="replyTo">Replying to</string>
+    <string name="replyToUserHandle">ChrisEvans</string>
+    <string name="reply_hint">Tweet your reply</string>
 </resources>

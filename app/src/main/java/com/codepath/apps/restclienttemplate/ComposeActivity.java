@@ -2,8 +2,11 @@ package com.codepath.apps.restclienttemplate;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,13 +17,17 @@ import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 
+import com.bumptech.glide.Glide;
 import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.google.android.material.textfield.TextInputLayout;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 import org.parceler.Parcels;
+import org.w3c.dom.Text;
 
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 import okhttp3.Headers;
 
 public class ComposeActivity extends AppCompatActivity {
@@ -38,11 +45,12 @@ public class ComposeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_compose);
-        ivUserProfileImage = findViewById(R.id.ivProfileImage);
+        ivUserProfileImage = findViewById(R.id.ivUserProfileImage);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarTweet);
         setSupportActionBar(toolbar);
 
         client = TwitterApplication.getRestClient(this);
+        getCurrentAuthenticatedUser(this);
 
         etComposeTweet = findViewById(R.id.etComposeTweet);
         // etComposeTweet.setTextIsSelectable(true);
@@ -56,7 +64,23 @@ public class ComposeActivity extends AppCompatActivity {
         });
         btnTweet = findViewById(R.id.btnTweet);
         // disable compose tweet button when the user hasn't input anything
-        // btnTweet.setEnabled(!etComposeTweet.getText().toString().isEmpty());
+        btnTweet.setEnabled(!etComposeTweet.getText().toString().isEmpty());
+
+        etComposeTweet.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                btnTweet.setEnabled(!etComposeTweet.getText().toString().isEmpty());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
         btnTweet.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,7 +108,6 @@ public class ComposeActivity extends AppCompatActivity {
                             finish();
                         } catch (JSONException e) {
                             Log.e(TAG, "error when publish tweet");
-
                             e.printStackTrace();
                         }
 
@@ -98,5 +121,29 @@ public class ComposeActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void getCurrentAuthenticatedUser(final Context context) {
+        client.getAuthenticatedUser(new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Headers headers, JSON json) {
+                Log.i(TAG, "onSuccess get current authenticated user");
+                JSONObject currentUserObject = json.jsonObject;
+                try {
+                    String profileImageUrl = currentUserObject.getString("profile_image_url_https");
+                    Log.i(TAG, "user profile image: " + profileImageUrl);
+                    Glide.with(context).load(profileImageUrl).transform(new RoundedCornersTransformation(100, 0)).into(ivUserProfileImage);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                Log.e(TAG, "onFailure get current authenticated user", throwable);
+            }
+        });
     }
 }
