@@ -12,35 +12,9 @@
         android:layout_height="35dp"
         android:layout_marginLeft="15dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/vLine"
+        app:layout_constraintTop_toBottomOf="@id/appbar_layout"
         tools:srcCompat="@tools:sample/avatars" />
-    <View
-        android:id="@+id/vLine"
-        android:layout_width="1dp"
-        android:layout_height="20dp"
-        android:background="@android:color/darker_gray"
-        app:layout_constraintTop_toBottomOf="@id/appbar_layout"
-        app:layout_constraintStart_toStartOf="@id/ivUserProfileImage"
-        android:layout_marginLeft="17.5dp"
-        android:layout_marginBottom="5dp"/>
 
-    <TextView
-        android:id="@+id/tvReplyTo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/replyTo"
-        app:layout_constraintStart_toStartOf="@id/tweet_text_input_layout"
-        app:layout_constraintTop_toBottomOf="@id/appbar_layout"/>
-
-    <TextView
-        android:id="@+id/tvRepliedToUserHandle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/replyToUserHandle"
-        app:layout_constraintStart_toEndOf="@id/tvReplyTo"
-        app:layout_constraintTop_toBottomOf="@id/appbar_layout"
-        android:layout_marginLeft="4dp"
-        android:textColor="@color/primary_color"/>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tweet_text_input_layout"
@@ -53,7 +27,7 @@
         app:counterOverflowTextAppearance="@style/counterOverride"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/ivUserProfileImage"
-        app:layout_constraintTop_toBottomOf="@id/vLine"
+        app:layout_constraintTop_toBottomOf="@id/appbar_layout"
         app:counterTextAppearance="@style/counterText"
         android:theme="@style/TextInputLayout"
         app:hintEnabled="false"
@@ -69,7 +43,7 @@
             android:ems="10"
             android:focusableInTouchMode="true"
             android:gravity="start|top"
-            android:hint="@string/reply_hint"
+            android:hint="@string/compose_hint"
             android:background="@null"/>
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -93,7 +67,5 @@
             app:layout_scrollFlags="scroll|enterAlways"/>
 
     </com.google.android.material.appbar.AppBarLayout>
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
